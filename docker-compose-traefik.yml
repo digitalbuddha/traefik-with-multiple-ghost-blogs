@@ -37,7 +37,7 @@ services:
       - --certificatesresolvers.myresolver.acme.tlschallenge=true
 
       # set a valid email address for the certificate resolver.
-      - --certificatesresolvers.myresolver.acme.email=your-email-adress@email.com
+      - --certificatesresolvers.myresolver.acme.email=admin@androiddev.social
       
       # Set the path of the acme.json file. Mine is located relative to where this docker compose file is located.
       - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json

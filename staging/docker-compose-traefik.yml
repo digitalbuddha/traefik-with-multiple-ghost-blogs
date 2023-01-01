@@ -1,0 +1,47 @@
+version: "3.3"
+
+services:
+
+  traefik:
+    image: "traefik:v2.4"
+    container_name: "traefik"
+    command:  
+      # enable insecure api. Only for testing. You can access it via http://the-ip-address:8080 
+      - --api.insecure=true
+
+      # enable dashboard api
+      - --api 
+
+      # enable docker as a provider
+      - --providers.docker=true                  
+      
+      # set to false to not expose all docker containers to traefik
+      - --providers.docker.exposedbydefault=false
+
+      # set this to the 'web' network
+      - --providers.docker.network=web
+      
+      # enable default http port 80
+      - --entrypoints.web.address=:80                                             
+      
+    ports:
+      # This is the default port http
+      - "84:80"
+
+      # The default port to access Traefik's monitoring dashboard
+      - "85:8080"                                                               
+
+   # add the 'web' network
+    networks:
+     - web                                                                        
+   
+
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"                           
+
+    labels:
+      - "traefik.enable=true"                                                     
+      
+networks:
+  web:
+    external: true
